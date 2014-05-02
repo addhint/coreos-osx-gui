@@ -31,37 +31,78 @@
     <!-- MAIN CONTENT -->
     <div id="main_content_wrap" class="outer">
       <section id="main_content" class="inner">
-        <h3>
-<a name="welcome-to-github-pages" class="anchor" href="#welcome-to-github-pages"><span class="octicon octicon-link"></span></a>Welcome to GitHub Pages.</h3>
+        <h1>
+<a name="coreos-vagrant-gui-for-mac-os-x" class="anchor" href="#coreos-vagrant-gui-for-mac-os-x"><span class="octicon octicon-link"></span></a>CoreOS-Vagrant GUI for Mac OS X</h1>
 
-<p>This automatic page generator is the easiest way to create beautiful pages for all of your projects. Author your page content here using GitHub Flavored Markdown, select a template crafted by a designer, and publish. After your page is generated, you can check out the new branch:</p>
+<p>CoreOS-Vagrant GUI for Mac OS X is a Mac Status bar App which works like a wrapper around the coreos-vagrant command line tool.
+<a href="https://coreos.com">CoreOS</a> is a Linux distribution made specifically to run <a href="https://www.docker.io/">Docker</a> containers.
+<a href="https://github.com/coreos/coreos-vagrant">CoreOS-Vagrant</a> is made to run on VirtualBox and VMWare VMs.</p>
 
-<pre><code>$ cd your_repo_root/repo_name
-$ git fetch origin
-$ git checkout gh-pages
+<p><img src="coreos-vagrant-gui.png" alt="CoreOS-Vagrant-GUI L" title="CoreOS-Vagrant-GUI"></p>
+
+<h2>
+<a name="download" class="anchor" href="#download"><span class="octicon octicon-link"></span></a>Download</h2>
+
+<p>Head over to the <a href="https://github.com/rimusz/coreos-osx-gui/releases">Releases Page</a> to grab the latest ZIP file with the <code>App package</code>.</p>
+
+<h2>
+<a name="how-to-install" class="anchor" href="#how-to-install"><span class="octicon octicon-link"></span></a>How to install</h2>
+
+<p>Required software</p>
+
+<ul>
+<li><p>It needs <code>VirtualBox for OS X</code> to be present on the OS X.
+If you do not have it, download <a href="https://www.virtualbox.org/wiki/Downloads">VirtualBox for Mac OS X hosts</a> and install it.</p></li>
+<li><p>It needs <code>Vagrant for OS X</code> to be present on the OS X too.
+If you do not have it, download <a href="http://www.vagrantup.com/downloads.html">Vagrant for Mac OS X</a> and install it.</p></li>
+<li><p>It needs <code>iTerm 2</code> to be present on the OS X too.
+If you do not have it, download <a href="http://www.iterm2.com/#/section/downloads">iTerm 2</a> and install it.</p></li>
+<li><p>Download the <code>CoreOS Vagrant OSX GUI latest.zip</code> from the <a href="https://github.com/rimusz/coreos-osx-gui/releases">Releases Page</a> and unzip it.</p></li>
+<li>Start the <code>CoreOS Vagrant OSX GUI</code> and from menu <code>Setup/Update</code> choose <code>Initial setup of CoreOS-Vagrant</code> </li>
+<li>and the install will do the following:</li>
+</ul><pre><code>1) All dependent files/folders will be put under "coreos-osx" folder in the user's home folder e.g /Users/someuser/coreos-osx
+2) Will clone latest coreos-vagrant from git
+3) user-data file will have fleet, etcd, Docker Socket for the API and DockerUI enabled
+4) docker 4243 port will be set for docker OS X client to work properly
+5) Will set VM IP to 172.17.8.99 for DockerUI to properly open in a default web browser
+6) Will download and install fleet, etcd and docker OS X clients to ~/coreos-osx/bin/
+7) Will download latest vagrant VBox and run vagrant up to initialise VM
+8) Shared folder between host and VM will be created under ~/coreos-osx/share
+9) Will forward 80, 9000 and docker ports pool (49000..49900) including 4243 from host to vagrant VM.
 </code></pre>
 
-<p>If you're using the GitHub for Mac, simply sync your repository and you'll see the new branch.</p>
+<h2>
+<a name="how-it-works" class="anchor" href="#how-it-works"><span class="octicon octicon-link"></span></a>How it works</h2>
 
-<h3>
-<a name="designer-templates" class="anchor" href="#designer-templates"><span class="octicon octicon-link"></span></a>Designer Templates</h3>
+<p>Just start <code>CoreOS Vagrant OSX GUI</code> application and you will find a small icon with the CoreOS logo in the Status Bar.
+For now it only supports a standalone CoreOS VM, cluster support might come at same stage later one.</p>
 
-<p>We've crafted some handsome templates for you to use. Go ahead and continue to layouts to browse through them. You can easily go back to edit your page before publishing. After publishing your page, you can revisit the page generator and switch to another theme. Your Page content will be preserved if it remained markdown format.</p>
+<ul>
+<li>There you can <code>Up</code>, <code>Suspend</code>, <code>Halt</code>, <code>Reload</code> CoreOS vagrant VM</li>
+<li>Under <code>Up &amp; OS shell</code> OS Shell will be opened when <code>vagrant up</code> finishes up and will have such environment set:</li>
+</ul><pre><code>DOCKER_HOST=tcp://localhost:4243
+FLEETCTL_TUNNEL=127.0.0.1:2222
+Path to ~/coreos-osx/bin where docker, etcdclt and fleetctl binaries are stored
+</code></pre>
 
-<h3>
-<a name="rather-drive-stick" class="anchor" href="#rather-drive-stick"><span class="octicon octicon-link"></span></a>Rather Drive Stick?</h3>
+<ul>
+<li>
+<code>Setup/Update</code> <code>Check for updates</code> will update to the latest docker, etcdclt and fleetctl OS X clients</li>
+<li>
+<code>SSH</code> will open VM shell</li>
+<li>
+<a href="https://github.com/crosbymichael/dockerui">DockerUI</a> will show all running containers and etc (it might take a bit of a time after install for it to work as it needs to download it's image)</li>
+</ul><h2>
+<a name="to-dos" class="anchor" href="#to-dos"><span class="octicon octicon-link"></span></a>TO-DOs</h2>
 
-<p>If you prefer to not use the automatic generator, push a branch named <code>gh-pages</code> to your repository to create a page manually. In addition to supporting regular HTML content, GitHub Pages support Jekyll, a simple, blog aware static site generator written by our own Tom Preston-Werner. Jekyll makes it easy to create site-wide headers and footers without having to copy them across every page. It also offers intelligent blog support and other advanced templating features.</p>
+<ul>
+<li>Make sed to parse Vagrantfile with folder sharing, network IP and ports changes after git clone is done</li>
+<li>Make it easier to add/delete docker ports.</li>
+</ul><h2>
+<a name="other-links" class="anchor" href="#other-links"><span class="octicon octicon-link"></span></a>Other links</h2>
 
-<h3>
-<a name="authors-and-contributors" class="anchor" href="#authors-and-contributors"><span class="octicon octicon-link"></span></a>Authors and Contributors</h3>
-
-<p>You can <a href="https://github.com/blog/821" class="user-mention">@mention</a> a GitHub username to generate a link to their profile. The resulting <code>&lt;a&gt;</code> element will link to the contributor's GitHub Profile. For example: In 2007, Chris Wanstrath (<a href="https://github.com/defunkt" class="user-mention">@defunkt</a>), PJ Hyett (<a href="https://github.com/pjhyett" class="user-mention">@pjhyett</a>), and Tom Preston-Werner (<a href="https://github.com/mojombo" class="user-mention">@mojombo</a>) founded GitHub.</p>
-
-<h3>
-<a name="support-or-contact" class="anchor" href="#support-or-contact"><span class="octicon octicon-link"></span></a>Support or Contact</h3>
-
-<p>Having trouble with Pages? Check out the documentation at <a href="http://help.github.com/pages">http://help.github.com/pages</a> or contact <a href="mailto:support@github.com">support@github.com</a> and we’ll help you sort it out.</p>
+<p>Also you might like my other <a href="https://github.com/rimusz/boot2docker-gui-osx">boot2docker GUI for OS X</a> project for <a href="https://github.com/boot2docker/boot2docker">boot2docker</a>,
+as I use both projects depending on the work I need to do.</p>
       </section>
     </div>
 
