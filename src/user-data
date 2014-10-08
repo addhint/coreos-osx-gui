@@ -8,10 +8,11 @@
         After=docker.service
         Requires=docker.service
 
+
         [Service]
-        ExecStartPre=/usr/bin/docker pull crosbymichael/dockerui
-        ExecStart=/bin/bash -c '/usr/bin/docker start -a dockerui || /usr/bin/docker run --rm --name dockerui -p 9000:9000 -v /var/run/docker.sock:/docker.sock crosbymichael/dockerui -e /docker.sock'
-        ExecStop=/usr/bin/docker stop dockerui
+		ExecStartPre=/usr/bin/docker pull builtdock/simple-ui
+		ExecStart=/bin/bash -c '/usr/bin/docker start -a dockerui || /usr/bin/docker run --rm --name dockerui -p 9000:9000 -v /var/run/docker.sock:/docker.sock builtdock/simple-ui:latest -e /docker.sock'
+		ExecStop=/usr/bin/docker stop dockerui
 
         [Install]
         WantedBy=multi-user.target
